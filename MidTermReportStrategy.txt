@@ -3,5 +3,6 @@ MP.1 Data Buffer Optimization
     After inserting a new item, if the vector is "full" of elements (N), then the first elements are 
     removed until we have space for the new element.   
 MP.2 Keypoint Detection
-XXX 
-    Implement detectors HARRIS, FAST, BRISK, ORB, AKAZE, and SIFT and make them selectable by setting a string accordingly.
+    Implement detectors based on code from previous labs.
+MP.3 Keypoint Removal
+    Uses Rect.contains to check if all the keypoint are located inside the roi
