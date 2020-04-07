@@ -1,0 +1,7 @@
+MP.1 Data Buffer Optimization
+    From my point of view, a proper data estructure (FIFO) should be used (std::queue). 
+    After inserting a new item, if the vector is "full" of elements (N), then the first elements are 
+    removed until we have space for the new element.   
+MP.2 Keypoint Detection
+XXX 
+    Implement detectors HARRIS, FAST, BRISK, ORB, AKAZE, and SIFT and make them selectable by setting a string accordingly.

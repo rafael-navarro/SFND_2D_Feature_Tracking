@@ -62,6 +62,10 @@ int main(int argc, const char *argv[])
         // push image into data frame buffer
         DataFrame frame;
         frame.cameraImg = imgGray;
+
+        //Delete first elems if max size is exceeded
+        while(dataBuffer.size() > dataBufferSize - 1)
+            dataBuffer.erase(dataBuffer.begin());
         dataBuffer.push_back(frame);
 
         //// EOF STUDENT ASSIGNMENT
@@ -81,9 +85,13 @@ int main(int argc, const char *argv[])
         {
             detKeypointsShiTomasi(keypoints, imgGray, false);
         }
+        else if (detectorType.compare("HARRIS") == 0)
+        {
+            detKeypointsHarris(keypoints, imgGray, false);
+        }
         else
         {
-            //...
+            detKeypointsModern(keypoints, imgGray, detectorType, false);
         }
         //// EOF STUDENT ASSIGNMENT
 
