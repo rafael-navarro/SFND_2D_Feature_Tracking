@@ -8,3 +8,6 @@ MP.3 Keypoint Removal
     Uses Rect.contains to check if all the keypoint are located inside the roi
 MP.4 Keypoint Descriptors
     Implement descriptors based on code from previous labs or from opencv help (https://docs.opencv.org/4.1.0/d7/d7a/group__xfeatures2d__experiment.html)
+MP.5 Descriptor Matching
+    Implement detectors based on code from previous labs and code based on opencv example https://docs.opencv.org/3.4/d5/d6f/tutorial_feature_flann_matcher.html
+MP.6 Descriptor Distance Ratio
