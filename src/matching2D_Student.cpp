@@ -48,28 +48,26 @@ void descKeypoints(vector<cv::KeyPoint> &keypoints, cv::Mat &img, cv::Mat &descr
 
         extractor = cv::BRISK::create(threshold, octaves, patternScale);
     }
-    else 
+    else if (descriptorType.compare("SIFT") == 0)
     {
-
-        //...
+        extractor = cv::xfeatures2d::SiftDescriptorExtractor::create();
     }
-
-        //     cv::Ptr<cv::FeatureDetector> detectorSift = cv::xfeatures2d::SIFT::create();
-        // vector<cv::KeyPoint> kptsSift;
-
-        // double t = (double)cv::getTickCount();
-        // detectorSift->detect(img, kptsSift);
-        // t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
-        // cout << "SIFT detector with n= " << kptsSift.size() << " keypoints in " << 1000 * t / 1.0 << " ms" << endl;
-
-        // cv::Ptr<cv::xfeatures2d::SiftDescriptorExtractor> descriptorSift = cv::xfeatures2d::SiftDescriptorExtractor::create();
-        // cv::Mat descSift;
-        // t = (double)cv::getTickCount();
-        // descriptorSift->compute(imgGray, kptsSift, descSift);
-        // t = ((double)cv::getTickCount() - t) / cv::getTickFrequency();
-        // cout << "SIFT descriptor in " << 1000 * t / 1.0 << " ms" << endl;
-
-
+    else if (descriptorType.compare("BRIEF") == 0)
+    {
+        extractor = cv::xfeatures2d::BriefDescriptorExtractor::create();
+    }
+    else if (descriptorType.compare("ORB") == 0)
+    {
+        extractor = cv::ORB::create();
+    }
+    else if (descriptorType.compare("FREAK") == 0)
+    {
+        extractor = cv::xfeatures2d::FREAK::create(); 	
+    }
+    else if (descriptorType.compare("AKAZE") == 0)
+    {
+        extractor = cv::AKAZE::create();
+    }
 
     // perform feature description
     double t = (double)cv::getTickCount();

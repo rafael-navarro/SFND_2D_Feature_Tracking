@@ -6,3 +6,5 @@ MP.2 Keypoint Detection
     Implement detectors based on code from previous labs.
 MP.3 Keypoint Removal
     Uses Rect.contains to check if all the keypoint are located inside the roi
+MP.4 Keypoint Descriptors
+    Implement descriptors based on code from previous labs or from opencv help (https://docs.opencv.org/4.1.0/d7/d7a/group__xfeatures2d__experiment.html)
