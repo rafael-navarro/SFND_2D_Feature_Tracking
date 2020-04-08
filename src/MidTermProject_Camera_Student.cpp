@@ -75,7 +75,9 @@ int main(int argc, const char *argv[])
 
         // extract 2D keypoints from current image
         vector<cv::KeyPoint> keypoints; // create empty feature list for current image
-        string detectorType = "SHITOMASI";
+        string detectorType = "SHITOMASI"; //HARRIS, FAST, BRISK, ORB, AKAZE, SIFT
+        if(argc >= 2)
+            detectorType = argv[2];
 
         //// STUDENT ASSIGNMENT
         //// TASK MP.2 -> add the following keypoint detectors in file matching2D.cpp and enable string-based selection based on detectorType
@@ -159,6 +161,14 @@ int main(int argc, const char *argv[])
             string matcherType = "MAT_BF";        // MAT_BF, MAT_FLANN
             string descriptorType = "DES_BINARY"; // DES_BINARY, DES_HOG
             string selectorType = "SEL_NN";       // SEL_NN, SEL_KNN
+
+            if(argc >= 3)
+                matcherType = argv[3];
+            if(argc >= 4)
+                descriptorType = argv[4];
+            if(argc >= 5)
+                selectorType = argv[5];
+            
 
             //// STUDENT ASSIGNMENT
             //// TASK MP.5 -> add FLANN matching in file matching2D.cpp
