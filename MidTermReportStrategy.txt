@@ -11,3 +11,4 @@ MP.4 Keypoint Descriptors
 MP.5 Descriptor Matching
     Implement detectors based on code from previous labs and code based on opencv example https://docs.opencv.org/3.4/d5/d6f/tutorial_feature_flann_matcher.html
 MP.6 Descriptor Distance Ratio
+Some descriptor and extractors are not compatible (https://github.com/kyamagu/mexopencv/issues/351)

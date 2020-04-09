@@ -24,6 +24,14 @@ int main(int argc, const char *argv[])
 
     /* INIT VARIABLES AND DATA STRUCTURES */
 
+    //Vars foor stats
+    vector<int> nkeypoints;
+    vector<int> matchings;
+    vector<float> timeExtractor;
+    vector<float> timeDescriptor;
+    string detectorType;
+    string descriptorType;
+    bool waitKey = true;
     // data location
     string dataPath = "../";
 
@@ -75,26 +83,29 @@ int main(int argc, const char *argv[])
 
         // extract 2D keypoints from current image
         vector<cv::KeyPoint> keypoints; // create empty feature list for current image
-        string detectorType = "SHITOMASI"; //HARRIS, FAST, BRISK, ORB, AKAZE, SIFT
+        detectorType = "SHITOMASI"; //HARRIS, FAST, BRISK, ORB, AKAZE, SIFT
         if(argc >= 2)
-            detectorType = argv[2];
+            detectorType = argv[1];
 
         //// STUDENT ASSIGNMENT
         //// TASK MP.2 -> add the following keypoint detectors in file matching2D.cpp and enable string-based selection based on detectorType
         //// -> HARRIS, FAST, BRISK, ORB, AKAZE, SIFT
-
+        float time;
         if (detectorType.compare("SHITOMASI") == 0)
         {
-            detKeypointsShiTomasi(keypoints, imgGray, false);
+            time = detKeypointsShiTomasi(keypoints, imgGray, false);
         }
         else if (detectorType.compare("HARRIS") == 0)
         {
-            detKeypointsHarris(keypoints, imgGray, false);
+            time = detKeypointsHarris(keypoints, imgGray, false);
         }
         else
         {
-            detKeypointsModern(keypoints, imgGray, detectorType, false);
+            time = detKeypointsModern(keypoints, imgGray, detectorType, false);
         }
+
+        nkeypoints.push_back(keypoints.size());
+        timeExtractor.push_back(time);
         //// EOF STUDENT ASSIGNMENT
 
         //// STUDENT ASSIGNMENT
@@ -143,8 +154,13 @@ int main(int argc, const char *argv[])
         //// -> BRIEF, ORB, FREAK, AKAZE, SIFT
 
         cv::Mat descriptors;
-        string descriptorType = "BRISK"; // BRIEF, ORB, FREAK, AKAZE, SIFT
-        descKeypoints((dataBuffer.end() - 1)->keypoints, (dataBuffer.end() - 1)->cameraImg, descriptors, descriptorType);
+        
+        descriptorType = "BRISK"; // BRIEF, ORB, FREAK, AKAZE, SIFT
+        if(argc >= 3)
+            descriptorType = argv[2];
+
+        time = descKeypoints((dataBuffer.end() - 1)->keypoints, (dataBuffer.end() - 1)->cameraImg, descriptors, descriptorType);
+        timeDescriptor.push_back(time);
         //// EOF STUDENT ASSIGNMENT
 
         // push descriptors for current frame to end of data buffer
@@ -160,15 +176,16 @@ int main(int argc, const char *argv[])
             vector<cv::DMatch> matches;
             string matcherType = "MAT_BF";        // MAT_BF, MAT_FLANN
             string descriptorType = "DES_BINARY"; // DES_BINARY, DES_HOG
-            string selectorType = "SEL_NN";       // SEL_NN, SEL_KNN
+            string selectorType = "SEL_KNN";       // SEL_NN, SEL_KNN
 
-            if(argc >= 3)
-                matcherType = argv[3];
             if(argc >= 4)
-                descriptorType = argv[4];
+                matcherType = argv[3];
             if(argc >= 5)
+                descriptorType = argv[4];
+            if(argc >= 6)
                 selectorType = argv[5];
             
+
 
             //// STUDENT ASSIGNMENT
             //// TASK MP.5 -> add FLANN matching in file matching2D.cpp
@@ -182,6 +199,9 @@ int main(int argc, const char *argv[])
 
             // store matches in current data frame
             (dataBuffer.end() - 1)->kptMatches = matches;
+
+            (dataBuffer.end() - 1)->kptMatches = matches;
+            matchings.push_back(matches.size());
 
             cout << "#4 : MATCH KEYPOINT DESCRIPTORS done" << endl;
 
@@ -200,12 +220,30 @@ int main(int argc, const char *argv[])
                 cv::namedWindow(windowName, 7);
                 cv::imshow(windowName, matchImg);
                 cout << "Press key to continue to next image" << endl;
-                cv::waitKey(0); // wait for key to be pressed
+                if(waitKey)
+                    cv::waitKey(0); // wait for key to be pressed
             }
             bVis = false;
         }
 
     } // eof loop over all images
 
+    //Collect data 
+    cout << detectorType;
+    for(auto it=nkeypoints.begin(); it != nkeypoints.end(); ++it)
+        cout << " " << *it;
+    cout << endl;
+    cout << detectorType << "/" << descriptorType;
+    for(auto it=matchings.begin(); it != matchings.end(); ++it)
+        cout << " " << *it;
+    cout << endl;
+    cout << "Time Extractor " << detectorType;
+    for(auto it=timeExtractor.begin(); it != timeExtractor.end(); ++it)
+        cout << " " << *it;
+    cout << endl;
+    cout << "Time Descriptor " << descriptorType;
+    for(auto it=timeDescriptor.begin(); it != timeDescriptor.end(); ++it)
+        cout << " " << *it;
+    cout << endl;
     return 0;
 }
