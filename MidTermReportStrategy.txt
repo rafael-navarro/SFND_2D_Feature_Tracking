@@ -11,4 +11,21 @@ MP.4 Keypoint Descriptors
 MP.5 Descriptor Matching
     Implement detectors based on code from previous labs and code based on opencv example https://docs.opencv.org/3.4/d5/d6f/tutorial_feature_flann_matcher.html
 MP.6 Descriptor Distance Ratio
-Some descriptor and extractors are not compatible (https://github.com/kyamagu/mexopencv/issues/351)
+    Implementation of filter based on code from previous lab.
+MP.7 Performance Evaluation 1
+    Number of keypoint and performace time is shown in graphs (images/#Keypoints and images/TExtraction). The number of
+    keypoints depends on algorithm. The results are based on the default parameters of the extration algorithm. HARRIS 
+    and ORB found about 500 keypoints per frame (even setting higher limit in ORB) and FAST found about 5000. Average of 
+    keypoint found is about 1500. About computing time FAST is the best (2ms) and AKAZE and SIFT are the slowest algorithms (100ms).    
+MP.8 Performance Evaluation 2
+    Number of matched keypoints is shown in graph (images/#Matchings). Some descriptor and extractors combinations 
+    are not compatible (https://github.com/kyamagu/mexopencv/issues/351). The given results are based on default parameters,
+    results could improve tunning these parameters. Since FAST extract more keypoints, results show that more matched keypoints
+    are found (~200 kp/roi). HARRIS/SHITOMASI/ORB/SIFT seems to perform worst (50 kps/roi). Also note that HARRIS/AKAZE/SIFT 
+    tend to find keypoints around the car and few are found on the tailgate.
+MP.9 Performance Evaluation 3
+    Computing time for Extraction/Description algorithms is shown in graph "images/TCompute" and data is shown in "docs/RawData". 
+    Results show that the fastest combinations are FAST/BRIEF, FAST/ORB and ORB/BRIEF (~10ms). In generak, SIFT/AKAZE seem not 
+    suitable for real time because of computing time. Therefore, based on computing time and number of matching, in my opinion
+    best combinations are FAST/BRIEF, FAST/ORB and ORB/BRIEF.
+
